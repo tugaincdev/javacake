@@ -59,7 +59,7 @@ public class Hello extends PApplet {
 
         popMatrix();            // restore original coordinates
 
-        angle += frameCount*0.001;// increase rotation angle for next frame
+        angle += frameCount*0.01;// increase rotation angle for next frame
 
     }
 
