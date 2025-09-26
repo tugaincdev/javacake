@@ -1,12 +1,12 @@
 import processing.core.PApplet;
 import java.util.ArrayList;
-
 import processing.core.PImage;
 import processing.core.PVector;
 
 public class Hello extends PApplet {
-    ArrayList<PVector> positions; // lista para as pocisoes
+    ArrayList<PVector> posicoes; // Lista para armazenar as posições dos cliques
     PImage img;
+
 
     @Override
     public void settings() {
@@ -16,7 +16,7 @@ public class Hello extends PApplet {
     @Override
     public void setup() {
         background(255);
-        positions = new ArrayList<PVector>();
+        posicoes = new ArrayList<PVector>();
         img = loadImage("Milky-Zombie-Eye_1_1200x1200-removebg-preview.png");
     }
 
@@ -24,12 +24,12 @@ public class Hello extends PApplet {
     public void draw() {
         background(255);
 
-        // desenha o logo em cada posisao do array ykyk
-        for (PVector pos : positions) {
+        // desenha o logo em cada posição do array
+        for (PVector pos : posicoes) {
             pushMatrix();
             translate(pos.x, pos.y);
-            scale(0.25f);
-
+            float fatorEscala = 0.25f;
+            scale(fatorEscala);
 
             noStroke();
             fill(0, 0, 0);
@@ -41,7 +41,7 @@ public class Hello extends PApplet {
             fill(0, 0, 0);
             circle(0, 0, 500);
 
-            // Lines
+            // Linhas
             stroke(250);
             strokeWeight(50);
             line(-255, -180, -85, 220);
@@ -65,6 +65,59 @@ public class Hello extends PApplet {
             image(img, -200, 0, 200, 200);
             image(img, 0, 0, 200, 200);
 
+            //pupila do olho esquerdo
+            float olhoEsquerdo_x_local = -100;
+            float olhoEsquerdo_y_local = 100;
+            float olhoEsquerdo_x_global = pos.x + olhoEsquerdo_x_local * fatorEscala;
+            float olhoEsquerdo_y_global = pos.y + olhoEsquerdo_y_local * fatorEscala;
+            float dxEsquerdo = mouseX - olhoEsquerdo_x_global;
+            float dyEsquerdo = mouseY - olhoEsquerdo_y_global;
+            float distEsquerdo = dist(mouseX, mouseY, olhoEsquerdo_x_global, olhoEsquerdo_y_global);
+            float distMax = 12f;
+            float pupilaEsquerda_x_local = olhoEsquerdo_x_local;
+            float pupilaEsquerda_y_local = olhoEsquerdo_y_local;
+            if (distEsquerdo > 0) {
+                float offsetGlobal = min(distEsquerdo, distMax);
+                float unit_dx = dxEsquerdo / distEsquerdo;
+                float unit_dy = dyEsquerdo / distEsquerdo;
+                float dxGlobal = unit_dx * offsetGlobal;
+                float dyGlobal = unit_dy * offsetGlobal;
+                float offsetLocal_x = dxGlobal / fatorEscala;
+                float offsetLocal_y = dyGlobal / fatorEscala;
+                pupilaEsquerda_x_local += offsetLocal_x;
+                pupilaEsquerda_y_local += offsetLocal_y;
+            }
+            // Desenha pupila esquerda
+            noStroke();
+            fill(255,0,0); // Pupila preta
+            float diamPupilaLocal = 50f;
+            circle(pupilaEsquerda_x_local, pupilaEsquerda_y_local, diamPupilaLocal);
+
+            // Pupila do olho direito
+            float olhoDireito_x_local = 100;
+            float olhoDireito_y_local = 100;
+            float olhoDireito_x_global = pos.x + olhoDireito_x_local * fatorEscala;
+            float olhoDireito_y_global = pos.y + olhoDireito_y_local * fatorEscala;
+            float dxDireito = mouseX - olhoDireito_x_global;
+            float dyDireito = mouseY - olhoDireito_y_global;
+            float distDireito = dist(mouseX, mouseY, olhoDireito_x_global, olhoDireito_y_global);
+            float pupilaDireita_x_local = olhoDireito_x_local;
+            float pupilaDireita_y_local = olhoDireito_y_local;
+            if (distDireito > 0) {
+                float offsetGlobal = min(distDireito, distMax);
+                float unit_dx = dxDireito / distDireito;
+                float unit_dy = dyDireito / distDireito;
+                float dxGlobal = unit_dx * offsetGlobal;
+                float dyGlobal = unit_dy * offsetGlobal;
+                float offsetLocal_x = dxGlobal / fatorEscala;
+                float offsetLocal_y = dyGlobal / fatorEscala;
+                pupilaDireita_x_local += offsetLocal_x;
+                pupilaDireita_y_local += offsetLocal_y;
+            }
+            //dsenha pupila direita
+            noStroke();
+            fill(255,0,0);
+            circle(pupilaDireita_x_local, pupilaDireita_y_local, diamPupilaLocal);
 
             popMatrix();
         }
@@ -72,8 +125,7 @@ public class Hello extends PApplet {
 
     @Override
     public void mousePressed() {
-        
-        positions.add(new PVector(mouseX, mouseY));
+        posicoes.add(new PVector(mouseX, mouseY));
     }
 
     public static void main(String[] args) {
