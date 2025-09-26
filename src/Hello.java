@@ -4,7 +4,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class Hello extends PApplet {
-    ArrayList<PVector> posicoes; // Lista para armazenar as posições dos cliques
+    ArrayList<PVector> posicoes; //listatat armazenar as posições dos cliques
     PImage img;
 
 
@@ -87,10 +87,10 @@ public class Hello extends PApplet {
                 pupilaEsquerda_x_local += offsetLocal_x;
                 pupilaEsquerda_y_local += offsetLocal_y;
             }
-            // Desenha pupila esquerda
+            // pupila esquerda
             noStroke();
-            fill(255,0,0); // Pupila preta
-            float diamPupilaLocal = 50f;
+            fill(255,0,0); // Pupila veremelha do benfica
+            float diamPupilaLocal = 40f;
             circle(pupilaEsquerda_x_local, pupilaEsquerda_y_local, diamPupilaLocal);
 
             // Pupila do olho direito
