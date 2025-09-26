@@ -5,7 +5,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 public class Hello extends PApplet {
-    ArrayList<PVector> positions; // List to store click positions
+    ArrayList<PVector> positions; // lista para as pocisoes
     PImage img;
 
     @Override
@@ -72,7 +72,7 @@ public class Hello extends PApplet {
 
     @Override
     public void mousePressed() {
-        // Add the current mouse position to the list on click
+        
         positions.add(new PVector(mouseX, mouseY));
     }
 
